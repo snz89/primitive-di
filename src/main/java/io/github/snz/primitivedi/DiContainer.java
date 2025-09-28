@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class DiContainer extends AbstractDiContainer {
-    private Map<Class<?>, DependencyDescriptor<?>> descriptors = new HashMap<>();
-    private Map<Class<?>, Object> scopeInstances = new HashMap<>();
+    private final Map<Class<?>, DependencyDescriptor<?>> descriptors;
+    private final Map<Class<?>, Object> scopeInstances;
 
     DiContainer(DiContainerBuilder builder) {
         descriptors = builder.dependencyDescriptors;

@@ -15,7 +15,7 @@ public final class DiContainerBuilder {
             Class<?> implementationType,
             Lifecycle lifecycle,
             Function<AbstractDiContainer, T> generator) {
-        var descriptor = new DependencyDescriptor<T>(abstractionType, implementationType, lifecycle, generator);
+        var descriptor = new DependencyDescriptor<>(abstractionType, implementationType, lifecycle, generator);
         dependencyDescriptors.put(abstractionType, descriptor);
         return this;
     }

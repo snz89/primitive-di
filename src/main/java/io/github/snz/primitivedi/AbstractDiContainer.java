@@ -60,7 +60,7 @@ public abstract class AbstractDiContainer {
         }
 
         throw new DiException("There was no constructor for which you can get all the parameters. "
-                + String.format("Possible necessary types must be registered: %s", unregisteredTypeNames.toString()));
+                + String.format("Possible necessary types must be registered: %s", unregisteredTypeNames));
     }
 
     @SuppressWarnings("unchecked")
