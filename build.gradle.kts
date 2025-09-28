@@ -1,10 +1,11 @@
 plugins {
     id("java-library")
+    id("maven-publish")
     id("com.diffplug.spotless") version "8.0.0"
 }
 
 group = "io.github.snz"
-version = "1.0-SNAPSHOT"
+version = "1.0.0"
 
 repositories {
     mavenCentral()
@@ -20,6 +21,17 @@ dependencies {
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("primitive-di") {
+            from(components["java"])
+        }
+    }
+    repositories {
+        mavenLocal()
     }
 }
 
