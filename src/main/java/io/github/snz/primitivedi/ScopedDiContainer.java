@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class ScopedDiContainer extends AbstractDiContainer implements AutoCloseable {
-    private AbstractDiContainer root;
+    private final AbstractDiContainer root;
     private final Map<Class<?>, Object> scopeInstances = new HashMap<>();
     private boolean isClosed;
 
@@ -49,7 +49,6 @@ public final class ScopedDiContainer extends AbstractDiContainer implements Auto
     @Override
     public void close() {
         scopeInstances.clear();
-        root = null;
         isClosed = true;
     }
 

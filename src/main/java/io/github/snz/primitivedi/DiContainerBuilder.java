@@ -3,6 +3,7 @@ package io.github.snz.primitivedi;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+import org.jspecify.annotations.Nullable;
 
 public final class DiContainerBuilder {
     final Map<Class<?>, DependencyDescriptor<?>> dependencyDescriptors = new HashMap<>();
@@ -12,9 +13,9 @@ public final class DiContainerBuilder {
 
     private <T> DiContainerBuilder addDependency(
             Class<T> abstractionType,
-            Class<?> implementationType,
+            @Nullable Class<?> implementationType,
             Lifecycle lifecycle,
-            Function<AbstractDiContainer, T> generator) {
+            @Nullable Function<AbstractDiContainer, T> generator) {
         var descriptor = new DependencyDescriptor<>(abstractionType, implementationType, lifecycle, generator);
         dependencyDescriptors.put(abstractionType, descriptor);
         return this;
