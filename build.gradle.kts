@@ -24,7 +24,7 @@ java {
 
 spotless {
     java {
-        googleJavaFormat()
+        palantirJavaFormat()
     }
 }
 
