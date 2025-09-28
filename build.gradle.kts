@@ -1,5 +1,5 @@
 plugins {
-    id("java")
+    id("java-library")
     id("com.diffplug.spotless") version "6.25.0"
 }
 
