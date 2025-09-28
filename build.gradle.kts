@@ -25,6 +25,7 @@ java {
 spotless {
     java {
         palantirJavaFormat()
+        removeUnusedImports()
     }
 }
 

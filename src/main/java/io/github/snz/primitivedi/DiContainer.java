@@ -1,7 +1,6 @@
 package io.github.snz.primitivedi;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 public final class DiContainer extends AbstractDiContainer {
