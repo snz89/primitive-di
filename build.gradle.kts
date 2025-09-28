@@ -1,6 +1,6 @@
 plugins {
     id("java-library")
-    id("com.diffplug.spotless") version "6.25.0"
+    id("com.diffplug.spotless") version "8.0.0"
 }
 
 group = "io.github.snz"
