@@ -53,8 +53,6 @@ public final class ScopedDiContainer extends AbstractDiContainer implements Auto
     }
 
     private void throwIfClosed() {
-        if (isClosed) {
-            throw new ScopedDiContainerClosedException("Trying to use a scoped di container area outside the scope");
-        }
+        ThrowHelper.throwIfDiScopeIsClosed(isClosed);
     }
 }
