@@ -125,4 +125,14 @@ class DiContainerTest {
         container.request(ServiceB.class);
         container.request(ServiceC.class);
     }
+
+    @Test
+    void shouldReturnCorrectRegistrationStatus() {
+        DiContainer container = DiContainer.builder()
+                .transientOf(ServiceA.class)
+                .build();
+
+        assertTrue(container.isRegistered(ServiceA.class));
+        assertFalse(container.isRegistered(ServiceB.class));
+    }
 }
