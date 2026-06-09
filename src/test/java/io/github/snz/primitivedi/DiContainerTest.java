@@ -161,4 +161,18 @@ class DiContainerTest {
             container.request(ServiceA.class);
         });
     }
+
+    @Test
+    void shouldThrowExceptionWhenRequestingFromClosedScope() {
+        DiContainer container = DiContainer.builder()
+                .scopedOf(ServiceA.class)
+                .build();
+        DiContainerScope scope = container.createScope();
+
+        scope.close();
+
+        assertThrows(ScopedDiContainerClosedException.class, () -> {
+            scope.request(ServiceA.class);
+        });
+    }
 }
