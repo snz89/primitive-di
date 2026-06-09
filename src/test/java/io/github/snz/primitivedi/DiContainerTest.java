@@ -2,6 +2,8 @@ package io.github.snz.primitivedi;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import io.github.snz.primitivedi.exception.DiException;
+import io.github.snz.primitivedi.exception.ScopedDiContainerClosedException;
 import io.github.snz.primitivedi.stub.*;
 import java.util.function.Function;
 import org.junit.jupiter.api.Test;
@@ -149,5 +151,14 @@ class DiContainerTest {
 
         assertTrue(container.isRegistered(ServiceA.class));
         assertFalse(container.isRegistered(ServiceB.class));
+    }
+
+    @Test
+    void shouldThrowExceptionWhenDependencyIsNotRegistered() {
+        DiContainer container = DiContainer.builder().build();
+
+        assertThrows(DiException.class, () -> {
+            container.request(ServiceA.class);
+        });
     }
 }
