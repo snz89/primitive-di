@@ -1,4 +1,3 @@
 package io.github.snz.primitivedi.stub;
 
-public record ServiceA() {
-}
+public record ServiceA() implements ServiceInterfaceA {}
