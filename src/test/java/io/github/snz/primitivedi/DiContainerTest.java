@@ -109,4 +109,20 @@ class DiContainerTest {
         assertInstanceOf(ServiceB.class, container.request(ServiceInterfaceB.class));
         assertInstanceOf(ServiceC.class, container.request(ServiceInterfaceC.class));
     }
+
+    @Test
+    void shouldInstallSingleAndMultipleModules() {
+        DiModule moduleA = builder -> builder.transientOf(ServiceA.class);
+        DiModule moduleB = builder -> builder.scopedOf(ServiceB.class);
+        DiModule moduleC = builder -> builder.singletonOf(ServiceC.class);
+
+        DiContainer container = DiContainer.builder()
+                .install(moduleA)
+                .install(moduleB, moduleC)
+                .build();
+
+        container.request(ServiceA.class);
+        container.request(ServiceB.class);
+        container.request(ServiceC.class);
+    }
 }
