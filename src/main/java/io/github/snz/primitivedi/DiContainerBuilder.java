@@ -15,6 +15,18 @@ public final class DiContainerBuilder {
         return this;
     }
 
+    public DiContainerBuilder install(DiModule module) {
+        module.configure(this);
+        return this;
+    }
+
+    public DiContainerBuilder install(DiModule... modules) {
+        for (DiModule module : modules) {
+            module.configure(this);
+        }
+        return this;
+    }
+
     public <T> DiContainerBuilder transientOf(Class<T> abstractionType, Class<? extends T> implementationType) {
         return register(
                 DependencyDescriptor.fromImplementation(abstractionType, implementationType, Lifecycle.TRANSIENT));
