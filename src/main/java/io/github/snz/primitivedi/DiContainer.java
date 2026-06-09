@@ -33,11 +33,11 @@ public final class DiContainer extends AbstractDiContainer {
     @Override
     @SuppressWarnings("unchecked")
     protected <T> T resolveSingleton(DependencyDescriptor<T> descriptor) {
-        if (getScopeInstances().get(descriptor.abstractionType()) != null) {
-            return (T) getScopeInstances().get(descriptor.abstractionType());
+        if (getScopeInstances().get(descriptor.getAbstractionType()) != null) {
+            return (T) getScopeInstances().get(descriptor.getAbstractionType());
         }
         T instance = createInstance(descriptor);
-        getScopeInstances().put(descriptor.abstractionType(), instance);
+        getScopeInstances().put(descriptor.getAbstractionType(), instance);
         return instance;
     }
 

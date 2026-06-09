@@ -3,7 +3,6 @@ package io.github.snz.primitivedi;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
-import org.jspecify.annotations.Nullable;
 
 public final class DiContainerBuilder {
     final Map<Class<?>, DependencyDescriptor<?>> dependencyDescriptors = new HashMap<>();
@@ -11,50 +10,51 @@ public final class DiContainerBuilder {
 
     DiContainerBuilder() {}
 
-    private <T> DiContainerBuilder addDependency(
-            Class<T> abstractionType,
-            @Nullable Class<? extends T> implementationType,
-            Lifecycle lifecycle,
-            @Nullable Function<AbstractDiContainer, T> generator) {
-        var descriptor = new DependencyDescriptor<>(abstractionType, implementationType, lifecycle, generator);
-        dependencyDescriptors.put(abstractionType, descriptor);
+    public <T> DiContainerBuilder register(DependencyDescriptor<T> descriptor) {
+        dependencyDescriptors.put(descriptor.getAbstractionType(), descriptor);
         return this;
     }
 
-    public <T> DiContainerBuilder addTransient(Class<T> abstractionType, Class<? extends T> implementationType) {
-        return addDependency(abstractionType, implementationType, Lifecycle.TRANSIENT, null);
+    public <T> DiContainerBuilder transientOf(Class<T> abstractionType, Class<? extends T> implementationType) {
+        return register(
+                DependencyDescriptor.fromImplementation(abstractionType, implementationType, Lifecycle.TRANSIENT));
     }
 
-    public <T> DiContainerBuilder addTransient(Class<T> implementationType) {
-        return addDependency(implementationType, implementationType, Lifecycle.TRANSIENT, null);
+    public <T> DiContainerBuilder transientOf(Class<T> implementationType) {
+        return register(
+                DependencyDescriptor.fromImplementation(implementationType, implementationType, Lifecycle.TRANSIENT));
     }
 
-    public <T> DiContainerBuilder addTransient(Class<T> abstractionType, Function<AbstractDiContainer, T> generator) {
-        return addDependency(abstractionType, null, Lifecycle.TRANSIENT, generator);
+    public <T> DiContainerBuilder transientOf(Class<T> abstractionType, Function<AbstractDiContainer, T> factory) {
+        return register(DependencyDescriptor.fromFactory(abstractionType, factory, Lifecycle.TRANSIENT));
     }
 
-    public <T> DiContainerBuilder addScoped(Class<T> abstractionType, Class<? extends T> implementationType) {
-        return addDependency(abstractionType, implementationType, Lifecycle.SCOPED, null);
+    public <T> DiContainerBuilder scopedOf(Class<T> abstractionType, Class<? extends T> implementationType) {
+        return register(
+                DependencyDescriptor.fromImplementation(abstractionType, implementationType, Lifecycle.SCOPED));
     }
 
-    public <T> DiContainerBuilder addScoped(Class<T> implementationType) {
-        return addDependency(implementationType, implementationType, Lifecycle.SCOPED, null);
+    public <T> DiContainerBuilder scopedOf(Class<T> implementationType) {
+        return register(
+                DependencyDescriptor.fromImplementation(implementationType, implementationType, Lifecycle.SCOPED));
     }
 
-    public <T> DiContainerBuilder addScoped(Class<T> abstractionType, Function<AbstractDiContainer, T> generator) {
-        return addDependency(abstractionType, null, Lifecycle.SCOPED, generator);
+    public <T> DiContainerBuilder scopedOf(Class<T> abstractionType, Function<AbstractDiContainer, T> factory) {
+        return register(DependencyDescriptor.fromFactory(abstractionType, factory, Lifecycle.SCOPED));
     }
 
-    public <T> DiContainerBuilder addSingleton(Class<T> abstractionType, Class<? extends T> implementationType) {
-        return addDependency(abstractionType, implementationType, Lifecycle.SINGLETON, null);
+    public <T> DiContainerBuilder singletonOf(Class<T> abstractionType, Class<? extends T> implementationType) {
+        return register(
+                DependencyDescriptor.fromImplementation(abstractionType, implementationType, Lifecycle.SINGLETON));
     }
 
-    public <T> DiContainerBuilder addSingleton(Class<T> implementationType) {
-        return addDependency(implementationType, implementationType, Lifecycle.SINGLETON, null);
+    public <T> DiContainerBuilder singletonOf(Class<T> implementationType) {
+        return register(
+                DependencyDescriptor.fromImplementation(implementationType, implementationType, Lifecycle.SINGLETON));
     }
 
-    public <T> DiContainerBuilder addSingleton(Class<T> abstractionType, Function<AbstractDiContainer, T> generator) {
-        return addDependency(abstractionType, null, Lifecycle.SINGLETON, generator);
+    public <T> DiContainerBuilder singletonOf(Class<T> abstractionType, Function<AbstractDiContainer, T> factory) {
+        return register(DependencyDescriptor.fromFactory(abstractionType, factory, Lifecycle.SINGLETON));
     }
 
     public DiContainer build() {
