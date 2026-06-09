@@ -69,6 +69,21 @@ class DiContainerTest {
     }
 
     @Test
+    void shouldDelegateSingletonResolutionToRootContainerWhenRequestedFromScope() {
+        DiContainer container = DiContainer.builder()
+                .singletonOf(ServiceA.class)
+                .build();
+
+        ServiceA rootInstance = container.request(ServiceA.class);
+
+        try (DiContainerScope scope = container.createScope()) {
+            ServiceA scopeInstance = scope.request(ServiceA.class);
+
+            assertSame(rootInstance, scopeInstance);
+        }
+    }
+
+    @Test
     void shouldRegisterUsingSingleParameterOverloads() {
         DiContainer container = DiContainer.builder()
                 .transientOf(ServiceA.class)
