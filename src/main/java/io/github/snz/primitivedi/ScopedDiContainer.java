@@ -1,6 +1,5 @@
 package io.github.snz.primitivedi;
 
-import io.github.snz.primitivedi.exception.ScopedDiContainerClosedException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,11 +37,11 @@ public final class ScopedDiContainer extends AbstractDiContainer implements Auto
     @Override
     @SuppressWarnings("unchecked")
     protected <T> T resolveScoped(DependencyDescriptor<T> descriptor) {
-        if (getScopeInstances().get(descriptor.abstractionType()) != null) {
-            return (T) getScopeInstances().get(descriptor.abstractionType());
+        if (getScopeInstances().get(descriptor.getAbstractionType()) != null) {
+            return (T) getScopeInstances().get(descriptor.getAbstractionType());
         }
         T instance = createInstance(descriptor);
-        getScopeInstances().put(descriptor.abstractionType(), instance);
+        getScopeInstances().put(descriptor.getAbstractionType(), instance);
         return instance;
     }
 

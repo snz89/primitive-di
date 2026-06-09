@@ -21,7 +21,7 @@ public abstract class AbstractDiContainer {
         var descriptor = (DependencyDescriptor<T>) getDescriptors().get(type);
         ThrowHelper.throwIfDescriptorIsNull(descriptor, type);
 
-        return switch (descriptor.lifecycle()) {
+        return switch (descriptor.getLifecycle()) {
             case SINGLETON -> resolveSingleton(descriptor);
             case SCOPED -> resolveScoped(descriptor);
             case TRANSIENT -> createInstance(descriptor);
@@ -33,31 +33,34 @@ public abstract class AbstractDiContainer {
     protected abstract <T> T resolveScoped(DependencyDescriptor<T> descriptor);
 
     protected <T> T createInstance(DependencyDescriptor<T> descriptor) {
-        if (descriptor.generator() != null) {
-            return descriptor.generator().apply(this);
-        }
-
-        Class<?> implType = descriptor.implementationType();
-        Constructor<?>[] constructors = implType.getConstructors();
-
-        List<String> unregisteredTypeNames = new ArrayList<>();
-
-        constructorsReview:
-        for (Constructor<?> constructor : constructors) {
-            Class<?>[] constructorParameterTypes = constructor.getParameterTypes();
-
-            for (Class<?> parameterType : constructorParameterTypes) {
-                if (!isRegistered(parameterType)) {
-                    unregisteredTypeNames.add(parameterType.getSimpleName());
-                    continue constructorsReview;
-                }
+        switch (descriptor) {
+            case FactoryDependencyDescriptor<T> factoryDescriptor -> {
+                return factoryDescriptor.create(this);
             }
+            case ImplementationDependencyDescriptor<T> implDescriptor -> {
+                Class<?> implType = implDescriptor.getImplementationType();
+                Constructor<?>[] constructors = implType.getConstructors();
 
-            return createWithConstructor(constructor);
+                List<String> unregisteredTypeNames = new ArrayList<>();
+
+                constructorsReview:
+                for (Constructor<?> constructor : constructors) {
+                    Class<?>[] constructorParameterTypes = constructor.getParameterTypes();
+
+                    for (Class<?> parameterType : constructorParameterTypes) {
+                        if (!isRegistered(parameterType)) {
+                            unregisteredTypeNames.add(parameterType.getSimpleName());
+                            continue constructorsReview;
+                        }
+                    }
+
+                    return createWithConstructor(constructor);
+                }
+
+                throw new DiException("There was no constructor for which you can get all the parameters. "
+                        + String.format("Possible necessary types must be registered: %s", unregisteredTypeNames));
+            }
         }
-
-        throw new DiException("There was no constructor for which you can get all the parameters. "
-                + String.format("Possible necessary types must be registered: %s", unregisteredTypeNames));
     }
 
     @SuppressWarnings("unchecked")
