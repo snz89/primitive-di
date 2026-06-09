@@ -1,6 +1,5 @@
 package io.github.snz.primitivedi;
 
-import io.github.snz.primitivedi.exception.DiException;
 import java.util.function.Function;
 import org.jspecify.annotations.Nullable;
 
@@ -10,9 +9,7 @@ public record DependencyDescriptor<T>(
         Lifecycle lifecycle,
         @Nullable Function<AbstractDiContainer, T> generator) {
     public DependencyDescriptor {
-        if (generator == null && implementationType == null) {
-            throw new DiException("No generator or implementation type is provided.");
-        }
+        ThrowHelper.throwIfImplTypeAndGeneratorIsMissing(implementationType, generator);
     }
 
     public DependencyDescriptor(

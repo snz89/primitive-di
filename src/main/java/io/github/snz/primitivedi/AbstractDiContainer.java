@@ -19,10 +19,7 @@ public abstract class AbstractDiContainer {
     @SuppressWarnings("unchecked")
     public <T> T request(Class<T> type) {
         var descriptor = (DependencyDescriptor<T>) getDescriptors().get(type);
-
-        if (descriptor == null) {
-            throw new DiException(String.format("The %s type is not registered", type.getName()));
-        }
+        ThrowHelper.throwIfDescriptorIsNull(descriptor, type);
 
         return switch (descriptor.lifecycle()) {
             case SINGLETON -> resolveSingleton(descriptor);
