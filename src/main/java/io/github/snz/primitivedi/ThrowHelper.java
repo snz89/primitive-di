@@ -13,7 +13,7 @@ class ThrowHelper {
     }
 
     static <T> void throwIfImplTypeAndGeneratorIsMissing(
-            @Nullable Class<?> implementationType, @Nullable Function<AbstractDiContainer, T> generator) {
+            @Nullable Class<?> implementationType, @Nullable Function<DiContainerBase, T> generator) {
         if (implementationType == null && generator == null) {
             throw new DiException("No generator or implementation type is provided.");
         }

@@ -3,12 +3,12 @@ package io.github.snz.primitivedi;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class ScopedDiContainer extends AbstractDiContainer implements AutoCloseable {
-    private final AbstractDiContainer root;
+public final class DiContainerScope extends DiContainerBase implements AutoCloseable {
+    private final DiContainerBase root;
     private final Map<Class<?>, Object> scopeInstances = new HashMap<>();
     private boolean isClosed;
 
-    ScopedDiContainer(AbstractDiContainer root) {
+    DiContainerScope(DiContainerBase root) {
         this.root = root;
     }
 

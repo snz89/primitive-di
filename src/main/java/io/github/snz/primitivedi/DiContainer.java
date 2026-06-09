@@ -3,7 +3,7 @@ package io.github.snz.primitivedi;
 import java.util.Collections;
 import java.util.Map;
 
-public final class DiContainer extends AbstractDiContainer {
+public final class DiContainer extends DiContainerBase {
     private final Map<Class<?>, DependencyDescriptor<?>> descriptors;
     private final Map<Class<?>, Object> scopeInstances;
 
@@ -21,8 +21,8 @@ public final class DiContainer extends AbstractDiContainer {
         return Collections.unmodifiableMap(descriptors);
     }
 
-    public ScopedDiContainer createScope() {
-        return new ScopedDiContainer(this);
+    public DiContainerScope createScope() {
+        return new DiContainerScope(this);
     }
 
     @Override

@@ -14,7 +14,7 @@ public sealed interface DependencyDescriptor<T>
     }
 
     public static <T> DependencyDescriptor<T> fromFactory(
-            Class<T> abstractionType, Function<AbstractDiContainer, T> factory, Lifecycle lifecycle) {
+            Class<T> abstractionType, Function<DiContainerBase, T> factory, Lifecycle lifecycle) {
         return new FactoryDependencyDescriptor<>(abstractionType, factory, lifecycle);
     }
 }

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public abstract class AbstractDiContainer {
+public abstract class DiContainerBase {
     public abstract Map<Class<?>, DependencyDescriptor<?>> getDescriptors();
 
     protected abstract Map<Class<?>, Object> getScopeInstances();

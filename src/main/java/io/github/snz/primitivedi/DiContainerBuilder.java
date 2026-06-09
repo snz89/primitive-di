@@ -25,7 +25,7 @@ public final class DiContainerBuilder {
                 DependencyDescriptor.fromImplementation(implementationType, implementationType, Lifecycle.TRANSIENT));
     }
 
-    public <T> DiContainerBuilder transientOf(Class<T> abstractionType, Function<AbstractDiContainer, T> factory) {
+    public <T> DiContainerBuilder transientOf(Class<T> abstractionType, Function<DiContainerBase, T> factory) {
         return register(DependencyDescriptor.fromFactory(abstractionType, factory, Lifecycle.TRANSIENT));
     }
 
@@ -38,7 +38,7 @@ public final class DiContainerBuilder {
                 DependencyDescriptor.fromImplementation(implementationType, implementationType, Lifecycle.SCOPED));
     }
 
-    public <T> DiContainerBuilder scopedOf(Class<T> abstractionType, Function<AbstractDiContainer, T> factory) {
+    public <T> DiContainerBuilder scopedOf(Class<T> abstractionType, Function<DiContainerBase, T> factory) {
         return register(DependencyDescriptor.fromFactory(abstractionType, factory, Lifecycle.SCOPED));
     }
 
@@ -52,7 +52,7 @@ public final class DiContainerBuilder {
                 DependencyDescriptor.fromImplementation(implementationType, implementationType, Lifecycle.SINGLETON));
     }
 
-    public <T> DiContainerBuilder singletonOf(Class<T> abstractionType, Function<AbstractDiContainer, T> factory) {
+    public <T> DiContainerBuilder singletonOf(Class<T> abstractionType, Function<DiContainerBase, T> factory) {
         return register(DependencyDescriptor.fromFactory(abstractionType, factory, Lifecycle.SINGLETON));
     }
 
