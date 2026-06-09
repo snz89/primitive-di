@@ -1,9 +1,8 @@
 package io.github.snz.primitivedi;
 
 import io.github.snz.primitivedi.exception.DiException;
-import java.util.function.Function;
-
 import io.github.snz.primitivedi.exception.ScopedDiContainerClosedException;
+import java.util.function.Function;
 import org.jspecify.annotations.Nullable;
 
 class ThrowHelper {

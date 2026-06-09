@@ -30,8 +30,7 @@ public final class DiContainerBuilder {
     }
 
     public <T> DiContainerBuilder scopedOf(Class<T> abstractionType, Class<? extends T> implementationType) {
-        return register(
-                DependencyDescriptor.fromImplementation(abstractionType, implementationType, Lifecycle.SCOPED));
+        return register(DependencyDescriptor.fromImplementation(abstractionType, implementationType, Lifecycle.SCOPED));
     }
 
     public <T> DiContainerBuilder scopedOf(Class<T> implementationType) {
