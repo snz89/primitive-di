@@ -56,6 +56,10 @@ public final class DiContainerBuilder {
         return register(DependencyDescriptor.fromFactory(abstractionType, factory, Lifecycle.SINGLETON));
     }
 
+    public <T> DiContainerBuilder singletonOf(Class<T> abstractionType, T instance) {
+        return register(DependencyDescriptor.fromFactory(abstractionType, container -> instance, Lifecycle.SINGLETON));
+    }
+
     public DiContainer build() {
         return new DiContainer(this);
     }
