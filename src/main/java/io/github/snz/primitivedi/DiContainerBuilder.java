@@ -13,7 +13,7 @@ public final class DiContainerBuilder {
 
     private <T> DiContainerBuilder addDependency(
             Class<T> abstractionType,
-            @Nullable Class<?> implementationType,
+            @Nullable Class<? extends T> implementationType,
             Lifecycle lifecycle,
             @Nullable Function<AbstractDiContainer, T> generator) {
         var descriptor = new DependencyDescriptor<>(abstractionType, implementationType, lifecycle, generator);
@@ -21,7 +21,7 @@ public final class DiContainerBuilder {
         return this;
     }
 
-    public <T> DiContainerBuilder addTransient(Class<T> abstractionType, Class<?> implementationType) {
+    public <T> DiContainerBuilder addTransient(Class<T> abstractionType, Class<? extends T> implementationType) {
         return addDependency(abstractionType, implementationType, Lifecycle.TRANSIENT, null);
     }
 
@@ -33,7 +33,7 @@ public final class DiContainerBuilder {
         return addDependency(abstractionType, null, Lifecycle.TRANSIENT, generator);
     }
 
-    public <T> DiContainerBuilder addScoped(Class<T> abstractionType, Class<?> implementationType) {
+    public <T> DiContainerBuilder addScoped(Class<T> abstractionType, Class<? extends T> implementationType) {
         return addDependency(abstractionType, implementationType, Lifecycle.SCOPED, null);
     }
 
@@ -45,7 +45,7 @@ public final class DiContainerBuilder {
         return addDependency(abstractionType, null, Lifecycle.SCOPED, generator);
     }
 
-    public <T> DiContainerBuilder addSingleton(Class<T> abstractionType, Class<?> implementationType) {
+    public <T> DiContainerBuilder addSingleton(Class<T> abstractionType, Class<? extends T> implementationType) {
         return addDependency(abstractionType, implementationType, Lifecycle.SINGLETON, null);
     }
 
